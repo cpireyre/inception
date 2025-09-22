@@ -1,0 +1,14 @@
+services:
+  mariadb:
+    build: ./mariadb/
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mariadb
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_USER=${DB_USER}
+
+volumes:
+  db-data:

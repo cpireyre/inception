@@ -1,0 +1,29 @@
+services:
+  mariadb:
+    build:
+      ./requirements/mariadb/
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - DB_USER=${DB_USER}
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/mariadb
+    healthcheck:
+      test: ["CMD", "mariadb-admin ping -ucolin"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 5m
+      start_interval: 5s
+  wordpress:
+    build:
+      ./requirements/wordpress/
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+volumes:
+  db-data:

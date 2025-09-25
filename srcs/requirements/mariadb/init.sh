@@ -23,16 +23,16 @@ if [ ! -d "/var/lib/mariadb/mysql" ]; then
 
 mariadb-install-db --user=mysql
 
-echo flush privileges;
-echo create user '${DB_USER}'@'localhost' identified by  '${DB_PASSWORD}';
-echo alter user 'root'@'localhost' identified by '${DB_ROOT_PASSWORD}';
-echo flush privileges;
 mariadbd --bootstrap --user=mysql <<EOF
-  flush privileges;
-  create database wordpress;
-  create user '${DB_USER}'@'localhost' identified by  '${DB_PASSWORD}';
-  alter user 'root'@'localhost' identified by '${DB_ROOT_PASSWORD}';
-  flush privileges;
+		use mysql;
+		flush privileges;
+		alter user 'root'@'localhost' identified by '$DB_ROOT_PASSWORD';
+		create database wordpress;
+		create user '$DB_USER'@'%' identified by '$DB_PASSWORD';
+		create user '$DB_USER'@'localhost' identified by '$DB_PASSWORD';
+		grant all privileges on wordpress.* to '$DB_USER'@'%';
+		grant all privileges on wordpress.* to '$DB_USER'@'localhost';
+		flush privileges;
 EOF
 
 else

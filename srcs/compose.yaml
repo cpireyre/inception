@@ -1,5 +1,11 @@
+networks:
+  app:
+    driver: bridge
+
 services:
   mariadb:
+    networks:
+      - app
     build:
       ./requirements/mariadb/
     environment:
@@ -12,7 +18,7 @@ services:
     volumes:
       - db-data:/var/lib/mariadb
     healthcheck:
-      test: ["CMD", "mariadb-admin ping -ucolin"]
+      test: ["CMD", "mariadb-admin ping -ucolin -pdontcommitthis"]
       interval: 5s
       timeout: 10s
       retries: 3
@@ -24,6 +30,8 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    networks:
+      - app
 
 volumes:
   db-data:

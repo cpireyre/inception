@@ -3,6 +3,6 @@ EXPOSE 3306
 
 RUN apk update && apk add mariadb mariadb-client
 
-COPY init.sh /
-RUN chmod +x init.sh
-CMD ["/init.sh"]
+COPY          init-mariadb.sh /
+RUN chmod +x /init-mariadb.sh
+CMD        ["/init-mariadb.sh"]

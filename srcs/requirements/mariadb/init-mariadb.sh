@@ -27,11 +27,11 @@ mariadbd --bootstrap --user=mysql <<EOF
 		use mysql;
 		flush privileges;
 		alter user 'root'@'localhost' identified by '$DB_ROOT_PASSWORD';
-		create database wordpress;
+		# create database wordpress;
 		create user '$DB_USER'@'%' identified by '$DB_PASSWORD';
 		create user '$DB_USER'@'localhost' identified by '$DB_PASSWORD';
-		grant all privileges on wordpress.* to '$DB_USER'@'%';
-		grant all privileges on wordpress.* to '$DB_USER'@'localhost';
+		grant all privileges on *.* to '$DB_USER'@'%';
+		grant all privileges on *.* to '$DB_USER'@'localhost';
 		flush privileges;
 EOF
 

@@ -1,6 +1,8 @@
 FROM alpine:3.22
+EXPOSE 9000
 
 COPY wp-cli.phar /wp/wp-cli.phar
+COPY php.ini /etc/php83/php-fpm.conf
 
 RUN apk update && apk add \
       mariadb-client \

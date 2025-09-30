@@ -1,5 +1,6 @@
 networks:
   app:
+    driver: bridge
 
 services:
   mariadb:
@@ -34,6 +35,18 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    networks:
+      - app
+    ports:
+      - "9000:9000"
+    volumes:
+      - wp-data:/wp/
+  nginx:
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    ports:
+      - "8080:80"
     networks:
       - app
     volumes:

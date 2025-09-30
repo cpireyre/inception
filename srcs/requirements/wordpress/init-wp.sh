@@ -2,6 +2,9 @@
 # shellcheck shell=sh
 set -eux
 
+addgroup user || true
+adduser -S user -G user || true
+
 if [ ! -f "/wp/wp-config.php" ]; then
   echo "Installing Wordpress..."
   cd  /wp

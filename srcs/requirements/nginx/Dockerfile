@@ -2,15 +2,6 @@ FROM alpine:3.22
 
 RUN apk update && apk add nginx curl
 
-COPY <<EOF /etc/nginx/nginx.conf
-events {}
-http {
-  server {
-    listen 80;
-    server_name copireyr.42.fr;
-  }
-}
-EOF
+COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN nginx -t
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-e", "stderr", "-g", "daemon off;"]

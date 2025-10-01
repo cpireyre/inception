@@ -11,8 +11,6 @@ services:
       - DB_PASSWORD=$DB_PASSWORD
       - DB_ROOT_PASSWORD=$DB_ROOT_PASSWORD
       - DB_USER=$DB_USER
-    ports:
-      - "3306:3306"
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/mariadb/
@@ -37,8 +35,7 @@ services:
         condition: service_healthy
     networks:
       - app
-    ports:
-      - "9000:9000"
+    restart: unless-stopped
     volumes:
       - wp-data:/wp/
   nginx:
@@ -46,9 +43,10 @@ services:
     depends_on:
       - wordpress
     ports:
-      - "8080:80"
+      - "80:80" # I think it has to be 80
     networks:
       - app
+    restart: unless-stopped
     volumes:
       - wp-data:/wp/
 

@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.21
 EXPOSE 9000
 
 COPY wp-cli.phar /wp/wp-cli.phar

@@ -19,6 +19,8 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3
+      # Start period: failure during that period will not be counted towards the maximum number of retries.
+      # If a health check succeeds during the start period, the container is considered started.
       start_period: 5m
       start_interval: 5s
   wordpress:

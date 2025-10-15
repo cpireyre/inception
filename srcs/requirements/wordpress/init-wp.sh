@@ -30,4 +30,7 @@ else
   echo "Skipping Wordpress install..."
 fi
 
+chown -R user:user /var/lib
+chmod -R 755 /var/lib
+
 exec php-fpm83 -F

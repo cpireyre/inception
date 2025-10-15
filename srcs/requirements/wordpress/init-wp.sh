@@ -22,6 +22,10 @@ if [ ! -f "/wp/wp-config.php" ]; then
     --admin_user=$WP_ADMIN_USER \
     --title=Blog \
     --url=$WP_URL
+  php wp-cli.phar user create \
+    $WP_USER \
+    $WP_USER_EMAIL \
+    --user_pass=$WP_USER_PASSWORD
 else
   echo "Skipping Wordpress install..."
 fi

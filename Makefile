@@ -10,7 +10,7 @@ all: volumes
 up: all
 
 volumes:
-	mkdir -p $(volume_dirs)
+	mkdir -m 777 -p $(volume_dirs)
 
 .PHONY: down
 down:
@@ -19,7 +19,7 @@ down:
 .PHONY: clean
 clean: down
 	docker compose -f $(compose_file) down -v
-	@$(RM) -r $(volume_dirs) 2> /dev/null || true
+	$(RM) -r $(volume_dirs)
 
 .PHONY: fclean
 fclean: clean

@@ -1,4 +1,4 @@
-compose_file := ./srcs/compose.yaml
+compose_file := ./srcs/docker-compose.yml
 volume_dirs  := /home/copireyr/data/mariadb /home/copireyr/data/wp
 
 .PHONY: all

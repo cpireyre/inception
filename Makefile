@@ -19,7 +19,7 @@ down:
 .PHONY: clean
 clean: down
 	docker compose -f $(compose_file) down -v
-	$(RM) -r $(volume_dirs)
+	sudo $(RM) -r $(volume_dirs)
 
 .PHONY: fclean
 fclean: clean

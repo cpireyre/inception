@@ -4,6 +4,8 @@ set -eux
 
 addgroup user || true
 adduser -S user -G user || true
+chown -R user:user /var/lib
+chmod -R 755 /var/lib
 
 if [ ! -f "/wp/wp-config.php" ]; then
   echo "Installing Wordpress..."
@@ -26,6 +28,7 @@ if [ ! -f "/wp/wp-config.php" ]; then
     $WP_USER \
     $WP_USER_EMAIL \
     --user_pass=$WP_USER_PASSWORD
+  echo "Done installing Wordpress."
 else
   echo "Skipping Wordpress install..."
 fi

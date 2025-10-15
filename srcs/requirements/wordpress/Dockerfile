@@ -13,6 +13,7 @@ RUN apk update && apk add \
       php-mysqli \
       php-phar
 
+RUN mkdir -p /var/lib && addgroup user && adduser -S user && chown -R user:user /var/lib
 COPY          init-wp.sh /wp/init-wp.sh
 RUN chmod +x             /wp/init-wp.sh
 CMD                    ["/wp/init-wp.sh"]

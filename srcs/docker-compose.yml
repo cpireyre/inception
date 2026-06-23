@@ -4,6 +4,7 @@ networks:
 
 services:
   mariadb:
+    container_name: mariadb
     networks:
       - app
     build: ./requirements/mariadb/
@@ -19,17 +20,23 @@ services:
       interval: 5s
       timeout: 10s
       retries: 3
+      # Start period: failure during that period will not be counted towards the maximum number of retries.
+      # If a health check succeeds during the start period, the container is considered started.
       start_period: 5m
       start_interval: 5s
   wordpress:
+    container_name: wordpress
     build: ./requirements/wordpress/
     environment:
       - DB_PASSWORD=$DB_PASSWORD
       - DB_USER=$DB_USER
+      - WP_ADMIN_EMAIL=$WP_ADMIN_EMAIL
       - WP_ADMIN_PASSWORD=$WP_ADMIN_PASSWORD
       - WP_ADMIN_USER=$WP_ADMIN_USER
-      - WP_ADMIN_EMAIL=$WP_ADMIN_EMAIL
       - WP_URL=$WP_URL
+      - WP_USER=$WP_USER
+      - WP_USER_EMAIL=$WP_USER_EMAIL
+      - WP_USER_PASSWORD=$WP_USER_PASSWORD
     depends_on:
       mariadb:
         condition: service_healthy
@@ -39,6 +46,7 @@ services:
     volumes:
       - wp-data:/wp/
   nginx:
+    container_name: nginx
     build: ./requirements/nginx
     depends_on:
       - wordpress
@@ -52,4 +60,12 @@ services:
 
 volumes:
   db-data:
+    driver_opts:
+      device: /home/copireyr/data/mariadb
+      o: bind
+      type: none
   wp-data:
+    driver_opts:
+      device: /home/copireyr/data/wp
+      o: bind
+      type: none
